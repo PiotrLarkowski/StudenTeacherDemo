@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -63,6 +64,28 @@ public class TeacherService extends Validator {
                     teachersWithList.get(i).getStudentList().size()));
         }
         return teachersWithoutList;
+    }
+
+    public List<TeacherListDto> getTeacherByName(String name){
+        ArrayList<Teacher> teacherList = new ArrayList();
+        teacherRepository.findAll().forEach(teacherList::add);
+        List<TeacherListDto> teachersWithGivenName = teacherList.stream()
+                .filter(teacher -> teacher.getName().equals(name))
+                .map(teacher -> new TeacherListDto(teacher.getName(),teacher.getLastName(),teacher.getAge()
+                        ,teacher.geteMail(),teacher.getSubject(),teacher.getStudentList().size()))
+                .collect(Collectors.toList());
+        return teachersWithGivenName;
+    }
+
+    public List<TeacherListDto> getTeacherByLastName(String name){
+        ArrayList<Teacher> teacherList = new ArrayList();
+        teacherRepository.findAll().forEach(teacherList::add);
+        List<TeacherListDto> teachersWithGivenName = teacherList.stream()
+                .filter(teacher -> teacher.getLastName().equals(name))
+                .map(teacher -> new TeacherListDto(teacher.getName(),teacher.getLastName(),teacher.getAge()
+                        ,teacher.geteMail(),teacher.getSubject(),teacher.getStudentList().size()))
+                .collect(Collectors.toList());
+        return teachersWithGivenName;
     }
 
     public TeacherListStudentNoListDto getTeacherListStudentsWithNoList(Long id) throws StudentException {

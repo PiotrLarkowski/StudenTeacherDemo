@@ -34,6 +34,18 @@ public class TeacherController {
         return teacherService.getAllTeachers();
     }
 
+    @GetMapping(path = "/name/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TeacherListDto> getTeacherByName(@PathVariable String name) throws StudentException {
+        return teacherService.getTeacherByName(name);
+    }
+
+    @GetMapping(path = "/lastname/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TeacherListDto> getTeacherByLastName(@PathVariable String name) throws StudentException {
+        return teacherService.getTeacherByLastName(name);
+    }
+
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TeacherListStudentNoListDto getTeacherById(@PathVariable Long id) throws StudentException {

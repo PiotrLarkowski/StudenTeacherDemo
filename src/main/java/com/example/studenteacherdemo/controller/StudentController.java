@@ -5,6 +5,7 @@ import com.example.studenteacherdemo.entity.Teacher;
 import com.example.studenteacherdemo.entityDto.Student.StudentDto;
 import com.example.studenteacherdemo.entityDto.Student.StudentListDto;
 import com.example.studenteacherdemo.entityDto.Student.StudentListTeacherNoListDto;
+import com.example.studenteacherdemo.entityDto.Teacher.TeacherListDto;
 import com.example.studenteacherdemo.exceptions.StudentException;
 import com.example.studenteacherdemo.service.StudentService;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,17 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
+    @GetMapping(path = "/name/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentListDto> getStudentByName(@PathVariable String name) throws StudentException {
+        return studentService.getStudentByName(name);
+    }
+
+    @GetMapping(path = "/lastname/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentListDto> getStudentByLastName(@PathVariable String name) throws StudentException {
+        return studentService.getStudentByLastName(name);
+    }
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public StudentListTeacherNoListDto getStudent(@PathVariable Long id) throws StudentException {

@@ -59,6 +59,28 @@ public class StudentService extends Validator {
         return studentListTeacherNoListDto;
     }
 
+    public List<StudentListDto> getStudentByName(String name){
+        ArrayList<Student> studentList = new ArrayList();
+        studentRepository.findAll().forEach(studentList::add);
+        List<StudentListDto> studentWithGivenName = studentList.stream()
+                .filter(student -> student.getName().equals(name))
+                .map(student -> new StudentListDto(student.getName(),student.getLastName(),student.getAge()
+                        ,student.geteMail(),student.getFieldOfStudy(),student.getAllTeachers().size()))
+                .collect(Collectors.toList());
+        return studentWithGivenName;
+    }
+
+    public List<StudentListDto> getStudentByLastName(String name){
+        ArrayList<Student> studentList = new ArrayList();
+        studentRepository.findAll().forEach(studentList::add);
+        List<StudentListDto> studentsWithGivenName = studentList.stream()
+                .filter(student -> student.getLastName().equals(name))
+                .map(student -> new StudentListDto(student.getName(),student.getLastName(),student.getAge()
+                        ,student.geteMail(),student.getFieldOfStudy(),student.getAllTeachers().size()))
+                .collect(Collectors.toList());
+        return studentsWithGivenName;
+    }
+
     public ArrayList<StudentListDto> getAllStudents() {
         ArrayList<Student> studentsWithList = new ArrayList();
         ArrayList<StudentListDto> studentsWithoutList = new ArrayList();
