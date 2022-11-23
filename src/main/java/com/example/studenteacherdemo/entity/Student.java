@@ -1,20 +1,18 @@
-package com.example.studenteacherdemo;
+package com.example.studenteacherdemo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.example.studenteacherdemo.validateGeters;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @ToString
 @AllArgsConstructor
 @Builder
+@Setter
 @NoArgsConstructor
-public class Student implements validateGeters{
+public class Student implements validateGeters {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +22,7 @@ public class Student implements validateGeters{
     private String eMail;
     private String fieldOfStudy;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Teacher> teacherList;
     @Override
     public String getName() {
@@ -44,6 +42,14 @@ public class Student implements validateGeters{
     @Override
     public String geteMail() {
         return eMail;
+    }
+
+    public List<Teacher> getAllTeachers(){
+        return teacherList;
+    }
+
+    public String getFieldOfStudy(){
+        return fieldOfStudy;
     }
 
     public void addTeacher(Teacher teacher) {
